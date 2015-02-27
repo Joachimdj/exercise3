@@ -6,7 +6,7 @@ and open the template in the editor.
 -->
 <html>
     <head>
-        <title>TODO supply a title</title>
+        <title>Players table</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <script src="//code.jquery.com/jquery-1.11.2.min.js"></script> 
@@ -47,6 +47,7 @@ and open the template in the editor.
                });
                
                request.done(function (msg){
+                   $('#links').empty();
                    var message = "";
                    message = msg;  
                        $("#links").append(message); 
@@ -147,15 +148,14 @@ and open the template in the editor.
             
         </script>
     </head>
-    <body>
-        <div>TODO write content</div>
-        <p>
+    <body> <br>
+        <p align="center">
             
             <input type="text" id="id"></input> <button id="getPlayers"class="btn btn-primary">Find player</button>
         <div id="links"></div>
             
         
-      </input><button id="getAllPlayers" class="btn btn-success">Find all player</button><button id="getAllPlayersFromWebsite" class="btn btn-success">Find all players from Website</button>
+        <p align="center"><button id="getAllPlayers" class="btn btn-success">Find all player</button> <button id="getAllPlayersFromWebsite" class="btn btn-success">Find all players from Website</button>
        <div class="loader"></div>
       <table class="table" id="allPlayers">
             

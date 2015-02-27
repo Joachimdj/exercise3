@@ -126,7 +126,7 @@ and open the template in the editor.
                    $('#allPlayers').empty();
                   for (var i =0; i < msg.length; i++){
                        var li ="<tr><td>"+msg[i].iId;
-                       li += "</td><td>"+msg[i].sName+"</td><td>"+msg[i].sCountryName+"</td><td><img src='"+msg[i].sCountryFlag+"'></td>";
+                       li += "</td><td>"+msg[i].sName+"</td><td>"+msg[i].sCountryName+"</td><td><img src='"+msg[i].sCountryFlag+"'></td><td><img src='"+msg[i].sCountryFlagLarge+"'></td>";
  
             $("#allPlayers").append(li);
                    } 

@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title>TODO supply a title</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <script src="//code.jquery.com/jquery-1.11.2.min.js"></script> 
+        <!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css"> 
+ 
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+        <script>
+            $(document).ready( function() {
+              
+             $("#getPlayers").click(makeAjaxFootBall);
+             
+                     
+                
+            });
+                  
+                 function makeAjaxFootBall(){
+               var id = document.getElementsByTagName("input")[0].value; 
+               alert(id);
+               var request = $.ajax({
+                   url: "api/players/"+id, 
+                   type: "GET",
+                   dataType: "json"
+                   
+                   
+               });
+               
+               request.done(function (msg){
+                   var message = "";
+                   message = msg;  
+                       $("#links").append(message); 
+                  });
+                  
+                request.fail(function (jqXHR, textStatus){ 
+                    alert("Request faile:"+ textStatus);
+                });
+               
+               
+                 
+             }
+            
+            
+            $(document).ready( function() {
+              
+             $("#getAllPlayers").click(makeAjaxFootBall1);
+             
+                     
+                
+            });
+                  
+                 function makeAjaxFootBall1(){ 
+            
+               var request = $.ajax({
+                   url: "api/players/", 
+                   type: "GET",
+                   dataType: "json"
+                   
+                   
+               });
+               
+               request.done(function (msg){
+                   $('#allPlayers').empty();
+                  for (var i =0; i < msg.length; i++){
+                       var li ="<tr><td>"+msg[i].id;
+                       li += "</td><td><input type='text' id='name' value='"+msg[i].name+"'></td><td><input type='text' value='"+msg[i].country+"'></td>";
+                       li += "<td><button class='btn btn-info btn-xs'>Save changes</button></tr>";
+            $("#allPlayers").append(li);
+                   } 
+                  console.log(msg);  
+                  });
+                  
+                request.fail(function (jqXHR, textStatus){ 
+                    alert("Request faile:"+ textStatus);
+                });
+               
+               
+                 
+             }
+            
+            
+        </script>
+    </head>
+    <body>
+        <div>TODO write content</div>
+        <p>
+            
+            <input type="text" id="id"></input> <button id="getPlayers"class="btn btn-primary">Find player</button>
+        <div id="links"></div>
+            
+        
+      </input><button id="getAllPlayers" class="btn btn-success">Find all player</button>
+        <table class="table" id="allPlayers">
+            
+            
+        </table>
+    </body>
+</html>

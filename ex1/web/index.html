@@ -14,9 +14,20 @@ and open the template in the editor.
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css"> 
  
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
-        <script>
+ <style>
+.loader {
+	position: fixed;
+	left: 0px;
+	top: 0px;
+	width: 100%;
+	height: 100%;
+	z-index: 9999;
+	background: url('http://gameticket.dk/includes/img/loading.gif') 50% 50% no-repeat rgb(249,249,249);
+} 
+ </style>
+        <script>  
             $(document).ready( function() {
-              
+               $(".loader").fadeOut("slow"); 
              $("#getPlayers").click(makeAjaxFootBall);
              
                      
@@ -24,8 +35,9 @@ and open the template in the editor.
             });
                   
                  function makeAjaxFootBall(){
+                      $(".loader").fadeIn("slow");
                var id = document.getElementsByTagName("input")[0].value; 
-               alert(id);
+            
                var request = $.ajax({
                    url: "api/players/"+id, 
                    type: "GET",
@@ -38,10 +50,12 @@ and open the template in the editor.
                    var message = "";
                    message = msg;  
                        $("#links").append(message); 
+                        $(".loader").fadeOut("slow");
                   });
                   
                 request.fail(function (jqXHR, textStatus){ 
                     alert("Request faile:"+ textStatus);
+                    $(".loader").fadeOut("slow");
                 });
                
                
@@ -58,9 +72,50 @@ and open the template in the editor.
             });
                   
                  function makeAjaxFootBall1(){ 
-            
+             $(".loader").fadeIn("slow");
                var request = $.ajax({
-                   url: "api/players/", 
+                   url: "api/players", 
+                   type: "GET",
+                   dataType: "json"
+                   
+                   
+               });
+               
+               request.done(function (msg){
+                   
+                   $('#allPlayers').empty();
+                  for (var i =0; i < msg.length; i++){
+                       var li ="<tr><td>"+msg[i].id;
+                       li += "</td><td><input type='text' id='name' value='"+msg[i].name+"'></td><td><input type='text' value='"+msg[i].country+"'></td>";
+                       li += "<td><button class='btn btn-info btn-xs'>Save changes</button></tr>";
+            $("#allPlayers").append(li);
+                   } 
+                   $(".loader").fadeOut("slow");
+                  });
+                  
+                request.fail(function (jqXHR, textStatus){ 
+                    alert("Request faile:"+ textStatus);
+                    $(".loader").fadeOut("slow");
+                });
+               
+               
+                 
+                 
+                 
+             }
+            
+               $(document).ready( function() {
+              
+             $("#getAllPlayersFromWebsite").click(makeAjaxFootBall2);
+             
+                     
+                
+            });
+                  
+                 function makeAjaxFootBall2(){ 
+                      $(".loader").fadeIn("slow"); 
+               var request = $.ajax({
+                   url: "api/players/AllPlayersFromWebsite", 
                    type: "GET",
                    dataType: "json"
                    
@@ -70,22 +125,25 @@ and open the template in the editor.
                request.done(function (msg){
                    $('#allPlayers').empty();
                   for (var i =0; i < msg.length; i++){
-                       var li ="<tr><td>"+msg[i].id;
-                       li += "</td><td><input type='text' id='name' value='"+msg[i].name+"'></td><td><input type='text' value='"+msg[i].country+"'></td>";
-                       li += "<td><button class='btn btn-info btn-xs'>Save changes</button></tr>";
+                       var li ="<tr><td>"+msg[i].iId;
+                       li += "</td><td>"+msg[i].sName+"</td><td>"+msg[i].sCountryName+"</td><td><img src='"+msg[i].sCountryFlag+"'></td>";
+ 
             $("#allPlayers").append(li);
                    } 
                   console.log(msg);  
+                   $(".loader").fadeOut("slow"); 
                   });
                   
                 request.fail(function (jqXHR, textStatus){ 
                     alert("Request faile:"+ textStatus);
+                    $(".loader").fadeOut("slow");
                 });
                
                
                  
+                 
+                 
              }
-            
             
         </script>
     </head>
@@ -97,8 +155,9 @@ and open the template in the editor.
         <div id="links"></div>
             
         
-      </input><button id="getAllPlayers" class="btn btn-success">Find all player</button>
-        <table class="table" id="allPlayers">
+      </input><button id="getAllPlayers" class="btn btn-success">Find all player</button><button id="getAllPlayersFromWebsite" class="btn btn-success">Find all players from Website</button>
+       <div class="loader"></div>
+      <table class="table" id="allPlayers">
             
             
         </table>
